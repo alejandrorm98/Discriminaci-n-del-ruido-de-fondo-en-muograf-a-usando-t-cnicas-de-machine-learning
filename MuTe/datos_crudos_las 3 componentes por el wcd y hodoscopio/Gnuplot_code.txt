@@ -1,0 +1,17 @@
+Charge histogram (Channel 2)
+
+cat File.dat | awk '{if($1!="#"){a+=($2-50)};if($1=="#" && $2=="t"){cg[a]++;a=0}}END{for(i in cg)print i,cg[i]}' > Histograma_Carga.dat
+
+cat File.dat | awk '{if($1!="#"){a+=($2-50)};if($1=="#" && $2=="t"){if(a<2000){cg[a]++};a=0}}END{for(i in cg)print i,cg[i]}' > Histograma_Carga.dat
+
+cat File.dat | awk '{if($1!="#"){a+=($2-50)};if($1=="#" && $2=="t"){print a ;a=0}}'> Carga.dat
+
+cat File.dat | awk '{if($1!="#"){a+=($2-50)};if($1=="#" && $2=="t"){if(a<2000){print a};a=0}}'> Carga.dat
+
+Peak histogram (Channel 2)
+
+cat File.dat | awk '{if($1!="#")if($2>a){a=$2};if($1=="#" && $2=="t"){pk[a]++;a=0}}END{for(i in pk)print i,pk[i]}' > Histogram_Pico.dat
+
+Gnoplot (Histograms)
+
+plot '< sort -nk1 Histograma.dat' u 1:2
